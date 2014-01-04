@@ -1,5 +1,15 @@
 module.exports = function(grunt) {
 	grunt.initConfig({
+		connect: {
+			server: {
+				options: {
+					hostname: '*',
+					base: 'public',
+					keepalive: true
+				}
+			}
+		},
+
 		coffee: {
 			compile: {
 				options: {bare: true},
@@ -37,9 +47,10 @@ module.exports = function(grunt) {
 		}
 	});
 
+	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-coffee');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('default', 'watch');
+	grunt.registerTask('default', ['connect', 'watch']);
 };
