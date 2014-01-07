@@ -3,24 +3,25 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Hammer Time</title>
-		<meta name="viewport" content="width=device-width">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
 		
 		<meta name="mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		
-		<link rel="shortcut icon" sizes="196x196" href="icon_196x196.png">
-		<link rel="shortcut icon" sizes="128x128" href="icon_128x128.png">
-		<link rel="shortcut icon" sizes="32x32" href="icon_32x32.png">
-		<link rel="apple-touch-icon" sizes="128x128" href="icon_128x128.png">
-		<link rel="apple-touch-icon-precomposed" sizes="128x128" href="icon_128x128.png">
+		<link rel="shortcut icon" sizes="196x196" href="images/icon_196x196.png">
+		<link rel="shortcut icon" sizes="128x128" href="images/icon_128x128.png">
+		<link rel="shortcut icon" sizes="32x32" href="images/icon_32x32.png">
+		<link rel="apple-touch-icon" sizes="128x128" href="images/icon_128x128.png">
+		<link rel="apple-touch-icon-precomposed" sizes="128x128" href="images/icon_128x128.png">
 
 		<link rel="stylesheet" type="text/css" href="stylesheets/main.css">
 	</head>
 	<body>
-		<div class="pads"></div>
-		<script src="scripts/vendor/jquery-2.0.3.min.js"></script>
-		<script src="scripts/vendor/underscore-min.js"></script>
-		<script src="scripts/vendor/createjs-2013.12.12.min.js"></script>
+		<div id="loader">
+			<div class="bar"></div>
+			<div class="mask"></div>
+		</div>
 		<script src="scripts/main.js"></script>
 	</body>
 </html>
