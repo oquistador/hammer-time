@@ -9,14 +9,24 @@ body {
   position: fixed;
   top: 50%;
   left: 50%;
-  margin: -60px 0 0 -100px; }
+  margin: -60px 0 0 -100px;
+  -moz-transition: opacity 500ms;
+  -webkit-transition: opacity 500ms;
+  -o-transition: opacity 500ms;
+  transition: opacity 500ms;
+  -webkit-perspective: 1000;
+  -webkit-backface-visibility: hidden; }
   #loader .bar {
     background: #000;
     width: 0;
     height: 100%;
     position: absolute;
+    -moz-transition: width 500ms;
+    -webkit-transition: width 500ms;
+    -o-transition: width 500ms;
     transition: width 500ms;
-    -webkit-transition: width 500ms; }
+    -webkit-perspective: 1000;
+    -webkit-backface-visibility: hidden; }
   #loader .mask {
     width: 100%;
     height: 100%;
