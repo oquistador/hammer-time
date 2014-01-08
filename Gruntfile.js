@@ -12,14 +12,21 @@ module.exports = function(grunt) {
 
 		coffee: {
 			compile: {
-				options: {bare: true},
-				files: [{
-					cwd: 'assets/scripts/',
-					expand: true,
-					src: '*.coffee',
-					dest: 'public/scripts/',
-					ext: '.js'
-				}]
+				options: {
+					join: true
+				},
+				files: {
+					'public/scripts/main.js': [
+						'assets/scripts/header.coffee',
+						'assets/scripts/config.coffee',
+						'assets/scripts/manifest.coffee',
+						'assets/scripts/app.coffee',
+						'assets/scripts/state.coffee',
+						'assets/scripts/sound.coffee',
+						'assets/scripts/sprite.coffee',
+						'assets/scripts/pad.coffee',
+					]
+				}
 			}
 		},
 
@@ -49,6 +56,7 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-coffee');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 

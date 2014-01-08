@@ -1,6 +1,13 @@
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+(function() {
+  var App,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-window.Hammer = (function(App) {
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+  window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
+
+  App = {};
+
   App.config = {
     bpm: 120,
     resolution: 1 / 8,
@@ -15,12 +22,13 @@ window.Hammer = (function(App) {
       audio: 'audio/'
     }
   };
+
   App.manifest = [
     {
       id: 'black',
       sprite: 'hexagon_black.png',
       audio: 'shuffled_house_120.mp3',
-      soloDuration: 4,
+      soloDuration: 1,
       row: 0,
       col: 0
     }, {
@@ -46,14 +54,16 @@ window.Hammer = (function(App) {
       col: 3
     }
   ];
-  window.AudioContext = window.AudioContext || window.webkitAudioContext;
-  window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
+
   App.canvas = {};
+
   App.audio = {
     context: new AudioContext(),
     sounds: {}
   };
+
   App.sprites = {};
+
   App.load = function() {
     var loadAudio, loadImage, loaderBar, remainingItems, totalItems, updateLoader;
     totalItems = App.manifest.length * 2;
@@ -117,6 +127,7 @@ window.Hammer = (function(App) {
       return loadImage(item);
     });
   };
+
   App.init = function() {
     var pads;
     pads = [];
@@ -129,6 +140,9 @@ window.Hammer = (function(App) {
       return App.state.pads[2].trigger();
     });
   };
+
+  window.addEventListener('load', App.load.bind(App));
+
   App.State = (function() {
     function State(pads) {
       this.pads = pads;
@@ -146,11 +160,10 @@ window.Hammer = (function(App) {
       requestAnimationFrame(this.update);
     };
 
-    State.prototype.render = function(dt) {};
-
     return State;
 
   })();
+
   App.Sound = (function() {
     function Sound(buffer) {
       this.buffer = buffer;
@@ -167,6 +180,7 @@ window.Hammer = (function(App) {
     return Sound;
 
   })();
+
   App.Sprite = (function() {
     Sprite.prototype.fps = App.config.sprite.fps;
 
@@ -222,6 +236,7 @@ window.Hammer = (function(App) {
     return Sprite;
 
   })();
+
   App.Pad = (function() {
     Pad.prototype.resolution = 60 / App.config.bpm * App.config.resolution * 4 * 1000;
 
@@ -260,7 +275,5 @@ window.Hammer = (function(App) {
     return Pad;
 
   })();
-  return App;
-})(window.Hammer || {});
 
-window.addEventListener('load', window.Hammer.load.bind(window.Hammer));
+}).call(this);
