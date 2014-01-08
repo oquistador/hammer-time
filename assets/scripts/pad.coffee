@@ -1,5 +1,6 @@
 class App.Pad
 	@prototype.resolution = 60 / App.config.bpm * App.config.resolution * 4 * 1000
+	
 	constructor: (opts)->
 		@id = opts.id
 		@sound = App.audio.sounds[@id]
@@ -27,5 +28,4 @@ class App.Pad
 		@sprite.render(dt)
 
 	trigger: ->
-		unless @triggerAt or @sprite.isPlaying
-			@triggerAt = @ts + @resolution - (@ts % @resolution)
+		@triggerAt = @ts + @resolution - (@ts % @resolution)

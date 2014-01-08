@@ -10,10 +10,7 @@ App.load = ->
 	totalItems = App.manifest.length * 2
 	remainingItems = totalItems
 	loaderBar = document.querySelector '#loader .bar'
-
 	@canvas.el = document.querySelector 'canvas'
-	@canvas.el.width = window.innerWidth
-	@canvas.el.height = window.innerHeight
 	@canvas.ctx = @canvas.el.getContext '2d'
 
 	updateLoader = ->

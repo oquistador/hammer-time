@@ -12,8 +12,8 @@
     bpm: 120,
     resolution: 1 / 8,
     sprite: {
-      width: 200,
-      height: 200,
+      width: 100,
+      height: 100,
       numFrames: 4,
       fps: 16
     },
@@ -52,6 +52,83 @@
       soloDuration: 1 / 8,
       row: 0,
       col: 3
+    }, {
+      id: 'black1',
+      sprite: 'hexagon_black.png',
+      audio: 'shuffled_house_120.mp3',
+      soloDuration: 1,
+      row: 0,
+      col: 4
+    }, {
+      id: 'green1',
+      sprite: 'hexagon_green.png',
+      audio: 'button-3.mp3',
+      soloDuration: 1 / 8,
+      row: 1,
+      col: 0
+    }, {
+      id: 'red1',
+      sprite: 'hexagon_red.png',
+      audio: 'button-4.mp3',
+      soloDuration: 1 / 8,
+      row: 1,
+      col: 1
+    }, {
+      id: 'green2',
+      sprite: 'hexagon_green.png',
+      audio: 'button-3.mp3',
+      soloDuration: 1 / 8,
+      row: 1,
+      col: 2
+    }, {
+      id: 'red2',
+      sprite: 'hexagon_red.png',
+      audio: 'button-4.mp3',
+      soloDuration: 1 / 8,
+      row: 1,
+      col: 3
+    }, {
+      id: 'green3',
+      sprite: 'hexagon_green.png',
+      audio: 'button-3.mp3',
+      soloDuration: 1 / 8,
+      row: 1,
+      col: 4
+    }, {
+      id: 'black4',
+      sprite: 'hexagon_black.png',
+      audio: 'shuffled_house_120.mp3',
+      soloDuration: 1,
+      row: 2,
+      col: 0
+    }, {
+      id: 'blue4',
+      sprite: 'hexagon_blue.png',
+      audio: 'button-2.mp3',
+      soloDuration: 1 / 8,
+      row: 2,
+      col: 1
+    }, {
+      id: 'green4',
+      sprite: 'hexagon_green.png',
+      audio: 'button-3.mp3',
+      soloDuration: 1 / 8,
+      row: 2,
+      col: 2
+    }, {
+      id: 'red4',
+      sprite: 'hexagon_red.png',
+      audio: 'button-4.mp3',
+      soloDuration: 1 / 8,
+      row: 2,
+      col: 3
+    }, {
+      id: 'red5',
+      sprite: 'hexagon_red.png',
+      audio: 'button-4.mp3',
+      soloDuration: 1 / 8,
+      row: 2,
+      col: 4
     }
   ];
 
@@ -70,8 +147,6 @@
     remainingItems = totalItems;
     loaderBar = document.querySelector('#loader .bar');
     this.canvas.el = document.querySelector('canvas');
-    this.canvas.el.width = window.innerWidth;
-    this.canvas.el.height = window.innerHeight;
     this.canvas.ctx = this.canvas.el.getContext('2d');
     updateLoader = function() {
       remainingItems--;
@@ -170,11 +245,14 @@
     }
 
     Sound.prototype.play = function(time) {
-      var source;
-      source = App.audio.context.createBufferSource();
-      source.buffer = this.buffer;
-      source.connect(App.audio.context.destination);
-      return source.start(time);
+      var _ref;
+      if ((_ref = this.source) != null) {
+        _ref.stop(0);
+      }
+      this.source = App.audio.context.createBufferSource();
+      this.source.buffer = this.buffer;
+      this.source.connect(App.audio.context.destination);
+      return this.source.start(time);
     };
 
     return Sound;
@@ -267,9 +345,7 @@
     };
 
     Pad.prototype.trigger = function() {
-      if (!(this.triggerAt || this.sprite.isPlaying)) {
-        return this.triggerAt = this.ts + this.resolution - (this.ts % this.resolution);
-      }
+      return this.triggerAt = this.ts + this.resolution - (this.ts % this.resolution);
     };
 
     return Pad;
