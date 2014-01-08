@@ -25,6 +25,7 @@ module.exports = function(grunt) {
 						'assets/scripts/sound.coffee',
 						'assets/scripts/sprite.coffee',
 						'assets/scripts/pad.coffee',
+						'assets/scripts/footer.coffee',
 					]
 				}
 			}
@@ -56,7 +57,6 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-coffee');
-	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
