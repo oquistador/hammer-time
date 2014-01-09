@@ -261,7 +261,7 @@
     };
 
     State.prototype.handleClick = function(evt) {
-      return this.pads[this.getPadIndex(evt.offsetX, evt.offsetY)].trigger();
+      return this.pads[this.getOffsetPadIndex(evt.clientX, evt.clientY)].trigger();
     };
 
     State.prototype.handleTouchStart = function(evt) {

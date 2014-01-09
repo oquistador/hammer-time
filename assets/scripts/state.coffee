@@ -23,7 +23,6 @@ class App.State
 		@update()
 
 	getOffsetPadIndex: (x, y)->
-
 		if window.orientation is 0
 			offsetX = (window.innerWidth - (@canvas.height / @pixelRatio)) / 2
 			offsetY = (window.innerHeight - (@canvas.width / @pixelRatio)) / 2
@@ -43,7 +42,7 @@ class App.State
 		row * @numCols + col
 
 	handleClick: (evt)=>
-		@pads[@getPadIndex(evt.offsetX, evt.offsetY)].trigger()
+		@pads[@getOffsetPadIndex(evt.clientX, evt.clientY)].trigger()
 
 	handleTouchStart: (evt)=>
 		evt.preventDefault()
