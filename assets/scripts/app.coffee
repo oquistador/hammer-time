@@ -10,8 +10,8 @@ App.load = ->
 	totalItems = App.manifest.length * 2
 	remainingItems = totalItems
 	loaderBar = document.querySelector '#loader .bar'
-	@canvas.el = document.querySelector 'canvas'
-	@canvas.ctx = @canvas.el.getContext '2d'
+	App.canvas.el = document.querySelector 'canvas'
+	App.canvas.ctx = App.canvas.el.getContext '2d'
 
 	updateLoader = ->
 		remainingItems--
@@ -61,18 +61,22 @@ App.load = ->
 
 		image.src = "#{App.config.paths.sprite}#{item.sprite}"
 
-	@manifest.forEach (item)->
+	App.manifest.forEach (item)->
 		loadAudio item
 		loadImage item
 
 App.init = ->
 	pads = []
-	@manifest.forEach (item)-> pads.push( new App.Pad item )
+	App.manifest.forEach (item)-> pads.push( new App.Pad item )
+	App.state = new App.State pads: pads, canvas: App.canvas.el
 
-	@state = new App.State pads
+	App.checkOrientation()
+	window.addEventListener 'orientationchange', App.checkOrientation
 
-	@canvas.el.addEventListener 'click', ->
-		App.state.pads[0].trigger()
-		App.state.pads[2].trigger()
+App.checkOrientation = (orientation)->
+	if window.orientation is 0
+		App.canvas.el.style.webkitTransform = 'rotate(90deg)'
+	else
+		App.canvas.el.style.webkitTransform = 'rotate(0deg)'
 
 window.addEventListener 'load', App.load.bind(App)
