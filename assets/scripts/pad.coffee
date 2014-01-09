@@ -1,16 +1,13 @@
 class App.Pad
-	@prototype.resolution = 60 / App.config.bpm * App.config.resolution * 4 * 1000
-	
 	constructor: (opts)->
 		@id = opts.id
 		@sound = App.audio.sounds[@id]
 		@sprite = App.sprites[@id]
+		@resolution = 60 / App.config.bpm * opts.resolution * 4 * 1000
 		
 		@spriteDuration = Math.floor(@sound.buffer.duration * 1000 / @sprite.length) * @sprite.length
 		@spriteDuration = 500 unless @spriteDuration
 
-		@duration = 
-		
 		@queue = []
 
 	update: (ts)->
@@ -24,7 +21,7 @@ class App.Pad
 			@sprite.play(@spriteDuration)
 			
 			@triggerAt = null
-		
+
 		@sprite.render(dt)
 
 	trigger: ->
