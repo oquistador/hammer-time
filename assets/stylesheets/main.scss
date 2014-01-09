@@ -8,26 +8,36 @@
 	-webkit-backface-visibility: hidden;
 }
 
+@mixin transform($properties...) {
+	-moz-transform: $properties;
+	-webkit-transform: $properties;
+	-o-transform: $properties;
+	transform: $properties;
+}
+
 body {
 	padding: 0;
 	margin: 0;
+	overflow: hidden;
 }
 
 canvas {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	margin: -150px 0 0 -250px;
+	width: 1000px;
+	height: 600px;
+	margin: -300px 0 0 -500px;
 }
 
 #loader {
-	width: 200px;
-	height: 120px;
+	width: 400px;
+	height: 240px;
 	background: #ccc;
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	margin: -60px 0 0 -100px;
+	margin: -120px 0 0 -200px;
 	@include transition(opacity 500ms);
 	
 	.bar {
@@ -43,5 +53,23 @@ canvas {
 		height: 100%;
 		background: transparent url(/images/loader_mask.png) no-repeat;
 		position: absolute;
+	}
+}
+
+@media screen and (min-resolution: 2dppx) {
+	body > * {
+		@include transform(scale(0.5));
+	}
+}
+
+@media screen and (orientation: portrait) {
+	canvas {
+		@include transform(rotate(90deg));
+	}
+}
+
+@media screen and (orientation: portrait) {
+	canvas {
+		@include transform(scale(0.5) rotate(90deg));
 	}
 }
