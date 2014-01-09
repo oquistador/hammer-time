@@ -32,7 +32,6 @@ App.load = ->
 					loader.addEventListener 'webkitTransitionEnd', transitionEnd
 				), 500
 
-
 	loadAudio = (item)->
 		ctx = App.audio.context
 
@@ -66,17 +65,6 @@ App.load = ->
 		loadImage item
 
 App.init = ->
-	pads = []
-	App.manifest.forEach (item)-> pads.push( new App.Pad item )
-	App.state = new App.State pads: pads, canvas: App.canvas.el
-
-	App.checkOrientation()
-	window.addEventListener 'orientationchange', App.checkOrientation
-
-App.checkOrientation = (orientation)->
-	if window.orientation is 0
-		App.canvas.el.style.webkitTransform = 'rotate(90deg)'
-	else
-		App.canvas.el.style.webkitTransform = 'rotate(0deg)'
+	App.state = new App.State App.manifest
 
 window.addEventListener 'load', App.load.bind(App)
