@@ -4,8 +4,7 @@ class App.Pad
 		@sound = App.audio.sounds[@id]
 		@sprite = App.sprites[@id]
 		@resolution = 60 / App.config.bpm * opts.resolution * 4 * 1000
-		
-		@spriteDuration = Math.floor(@sound.buffer.duration * 1000 / @sprite.length) * @sprite.length
+		@spriteDuration = Math.floor(@sound.buffer.duration * 1000 / @sprite.duration) * @sprite.duration
 		@spriteDuration = 500 unless @spriteDuration
 
 		@queue = []

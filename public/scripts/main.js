@@ -10,12 +10,13 @@
 
   App.config = {
     bpm: 120,
-    resolution: 1 / 8,
-    sprite: {
-      width: 100,
-      height: 100,
-      numFrames: 4,
-      fps: 16
+    pad: {
+      width: 200,
+      height: 200,
+      sprite: {
+        numFrames: 4,
+        fps: 16
+      }
     },
     paths: {
       sprite: 'images/sprites/',
@@ -42,28 +43,28 @@
       id: 'green',
       sprite: 'hexagon_green.png',
       audio: 'brushfill.120.mp3',
-      resolution: 1 / 8,
+      resolution: 1 / 16,
       row: 0,
       col: 2
     }, {
       id: 'red',
       sprite: 'hexagon_red.png',
       audio: 'button-4.mp3',
-      resolution: 1 / 16,
+      resolution: 1 / 8,
       row: 0,
       col: 3
     }, {
       id: 'black1',
       sprite: 'hexagon_black.png',
       audio: 'shuffled_house_120.mp3',
-      resolution: 1 / 8,
+      resolution: 1 / 4,
       row: 0,
       col: 4
     }, {
       id: 'green1',
       sprite: 'hexagon_green.png',
       audio: 'button-3.mp3',
-      resolution: 1 / 8,
+      resolution: 1 / 16,
       row: 1,
       col: 0
     }, {
@@ -77,7 +78,7 @@
       id: 'green2',
       sprite: 'hexagon_green.png',
       audio: 'button-3.mp3',
-      resolution: 1 / 8,
+      resolution: 1 / 16,
       row: 1,
       col: 2
     }, {
@@ -91,28 +92,28 @@
       id: 'green3',
       sprite: 'hexagon_green.png',
       audio: 'button-3.mp3',
-      resolution: 1 / 8,
+      resolution: 1 / 16,
       row: 1,
       col: 4
     }, {
       id: 'black4',
       sprite: 'hexagon_black.png',
       audio: 'shuffled_house_120.mp3',
-      resolution: 1,
+      resolution: 1 / 4,
       row: 2,
       col: 0
     }, {
       id: 'blue4',
       sprite: 'hexagon_blue.png',
       audio: 'button-2.mp3',
-      resolution: 1 / 8,
+      resolution: 1 / 4,
       row: 2,
       col: 1
     }, {
       id: 'green4',
       sprite: 'hexagon_green.png',
       audio: 'button-3.mp3',
-      resolution: 1 / 8,
+      resolution: 1 / 16,
       row: 2,
       col: 2
     }, {
@@ -204,43 +205,29 @@
   };
 
   App.init = function() {
-    var pads;
-    pads = [];
-    App.manifest.forEach(function(item) {
-      return pads.push(new App.Pad(item));
-    });
-    App.state = new App.State({
-      pads: pads,
-      canvas: App.canvas.el
-    });
-    App.checkOrientation();
-    return window.addEventListener('orientationchange', App.checkOrientation);
-  };
-
-  App.checkOrientation = function(orientation) {
-    if (window.orientation === 0) {
-      return App.canvas.el.style.webkitTransform = 'rotate(90deg)';
-    } else {
-      return App.canvas.el.style.webkitTransform = 'rotate(0deg)';
-    }
+    return App.state = new App.State(App.manifest);
   };
 
   window.addEventListener('load', App.load.bind(App));
 
   App.State = (function() {
-    function State(opts) {
+    function State(items) {
       this.update = __bind(this.update, this);
       this.handleTouchEnd = __bind(this.handleTouchEnd, this);
       this.handleTouchMove = __bind(this.handleTouchMove, this);
       this.handleTouchStart = __bind(this.handleTouchStart, this);
       this.handleClick = __bind(this.handleClick, this);
-      var pad, _i, _len, _ref;
-      this.canvas = opts.canvas;
+      var item, pad, _i, _len;
+      this.canvas = App.canvas.el;
+      this.pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
+      this.padWidth = App.config.pad.width;
+      this.padHeight = App.config.pad.height;
+      this.numCols = this.canvas.width / this.padWidth;
       this.pads = [];
-      _ref = opts.pads;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        pad = _ref[_i];
-        this.pads[this.getPadIndex(pad.sprite.x, pad.sprite.y)] = pad;
+      for (_i = 0, _len = items.length; _i < _len; _i++) {
+        item = items[_i];
+        pad = new App.Pad(item);
+        this.pads[item.row * this.numCols + item.col] = pad;
       }
       if ('ontouchstart' in window) {
         this.activeTouches = {};
@@ -253,20 +240,38 @@
       this.update();
     }
 
+    State.prototype.getOffsetPadIndex = function(x, y) {
+      var col, offsetX, offsetY, row;
+      if (window.orientation === 0) {
+        offsetX = (window.innerWidth - (this.canvas.height / this.pixelRatio)) / 2;
+        offsetY = (window.innerHeight - (this.canvas.width / this.pixelRatio)) / 2;
+        x = this.canvas.height - ((x - offsetX) * this.pixelRatio);
+        y = (y - offsetY) * this.pixelRatio;
+        col = Math.floor(y / this.padWidth);
+        row = Math.floor(x / this.padHeight);
+      } else {
+        offsetX = (window.innerWidth - (this.canvas.width / this.pixelRatio)) / 2;
+        offsetY = (window.innerHeight - (this.canvas.height / this.pixelRatio)) / 2;
+        x = (x - offsetX) * this.pixelRatio;
+        y = (y - offsetY) * this.pixelRatio;
+        col = Math.floor(x / this.padWidth);
+        row = Math.floor(y / this.padHeight);
+      }
+      return row * this.numCols + col;
+    };
+
     State.prototype.handleClick = function(evt) {
       return this.pads[this.getPadIndex(evt.offsetX, evt.offsetY)].trigger();
     };
 
     State.prototype.handleTouchStart = function(evt) {
-      var offsetX, offsetY, padIdx, touch, _i, _len, _ref, _results;
+      var padIdx, touch, _i, _len, _ref, _results;
       evt.preventDefault();
-      offsetX = evt.target.offsetLeft;
-      offsetY = evt.target.offsetTop;
       _ref = evt.changedTouches;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         touch = _ref[_i];
-        padIdx = this.getPadIndex(touch.clientX - offsetX, touch.clientY - offsetY);
+        padIdx = this.getOffsetPadIndex(touch.clientX, touch.clientY);
         this.activeTouches[touch.identifier] = padIdx;
         _results.push(this.pads[padIdx].trigger());
       }
@@ -274,15 +279,13 @@
     };
 
     State.prototype.handleTouchMove = function(evt) {
-      var offsetX, offsetY, padIdx, touch, _i, _len, _ref, _results;
+      var padIdx, touch, _i, _len, _ref, _results;
       evt.preventDefault();
-      offsetX = evt.target.offsetLeft;
-      offsetY = evt.target.offsetTop;
       _ref = evt.changedTouches;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         touch = _ref[_i];
-        padIdx = this.getPadIndex(touch.clientX - offsetX, touch.clientY - offsetY);
+        padIdx = this.getOffsetPadIndex(touch.clientX, touch.clientY);
         if (padIdx !== this.activeTouches[touch.identifier]) {
           this.activeTouches[touch.identifier] = padIdx;
           _results.push(this.pads[padIdx].trigger());
@@ -305,16 +308,9 @@
       return _results;
     };
 
-    State.prototype.getPadIndex = function(x, y) {
-      if (x >= this.canvas.width || y >= this.canvas.height) {
-        return -1;
-      }
-      return Math.floor(x / App.config.sprite.width) + Math.floor(y / App.config.sprite.height) * this.canvas.width / App.config.sprite.width;
-    };
-
     State.prototype.update = function(ts) {
       if (ts) {
-        App.canvas.ctx.clearRect(0, 0, App.canvas.el.width, App.canvas.el.height);
+        App.canvas.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.pads.forEach(function(pad) {
           return pad.update(ts);
         });
@@ -347,15 +343,15 @@
   })();
 
   App.Sprite = (function() {
-    Sprite.prototype.fps = App.config.sprite.fps;
+    Sprite.prototype.fps = App.config.pad.sprite.fps;
 
-    Sprite.prototype.numFrames = App.config.sprite.numFrames;
+    Sprite.prototype.numFrames = App.config.pad.sprite.numFrames;
 
-    Sprite.prototype.length = (1000 / Sprite.prototype.fps) * Sprite.prototype.numFrames;
+    Sprite.prototype.duration = (1000 / Sprite.prototype.fps) * Sprite.prototype.numFrames;
 
-    Sprite.prototype.width = App.config.sprite.width;
+    Sprite.prototype.width = App.config.pad.width;
 
-    Sprite.prototype.height = App.config.sprite.height;
+    Sprite.prototype.height = App.config.pad.height;
 
     function Sprite(opts) {
       this.image = opts.image;
@@ -373,7 +369,6 @@
 
     Sprite.prototype.reset = function() {
       this.isPlaying = false;
-      this.duration = 0;
       this.index = 0;
       return this;
     };
@@ -408,7 +403,7 @@
       this.sound = App.audio.sounds[this.id];
       this.sprite = App.sprites[this.id];
       this.resolution = 60 / App.config.bpm * opts.resolution * 4 * 1000;
-      this.spriteDuration = Math.floor(this.sound.buffer.duration * 1000 / this.sprite.length) * this.sprite.length;
+      this.spriteDuration = Math.floor(this.sound.buffer.duration * 1000 / this.sprite.duration) * this.sprite.duration;
       if (!this.spriteDuration) {
         this.spriteDuration = 500;
       }

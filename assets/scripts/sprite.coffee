@@ -1,9 +1,9 @@
 class App.Sprite
-	@prototype.fps = App.config.sprite.fps
-	@prototype.numFrames = App.config.sprite.numFrames
-	@prototype.length = (1000 / @prototype.fps) * @prototype.numFrames
-	@prototype.width = App.config.sprite.width
-	@prototype.height = App.config.sprite.height
+	@prototype.fps = App.config.pad.sprite.fps
+	@prototype.numFrames = App.config.pad.sprite.numFrames
+	@prototype.duration = (1000 / @prototype.fps) * @prototype.numFrames
+	@prototype.width = App.config.pad.width
+	@prototype.height = App.config.pad.height
 
 	constructor: (opts)->
 		@image = opts.image
@@ -18,7 +18,6 @@ class App.Sprite
 
 	reset: ->
 		@isPlaying = false
-		@duration = 0
 		@index = 0
 		@
 
