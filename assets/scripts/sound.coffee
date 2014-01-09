@@ -7,4 +7,4 @@ class App.Sound
 		@source.buffer = @buffer
 		@source.connect App.audio.context.destination
 		
-		@source.start time
+		@source.noteOn time
