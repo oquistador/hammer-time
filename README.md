@@ -1,7 +1,7 @@
 Hunter don't hurt 'em
 ==============
 
-This web app is an audio sequencer I'm building for my 1 year-old daughter Hunter. It is eventually intended for touch screen devices. It is built using only native functionality with no plugins or libraries. It takes advantage of the Web Audio Api and Canvas. 
+This web app is an audio sequencer I'm building for my 1 year-old daughter Hunter. It is optimized for multi-touch, high DPI (I refuse to write "Retina") devices with sloppy users. Don't worry. It will also work in your desktop browser... one boring 1/1 pixel ratio click at a time. It is built using only native functionality with no plugins or libraries because sometimes it's good to get your hands dirty. It takes advantage of the Web Audio Api for audio playback and Canvas for animations. 
 
 Installation
 ---
