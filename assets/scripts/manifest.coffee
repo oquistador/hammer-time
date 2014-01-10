@@ -1,123 +1,75 @@
 App.manifest = 
 	[
 		{
-			id: 'black'
+			id: 'clap'
 			sprite: 'hexagon_black.png'
-			audio: 'shuffled_house_120.mp3'
-			resolution: 1/4
-			row: 0
-			col: 0
-		}
-		{
-			id: 'blue'
-			sprite: 'hexagon_blue.png'
-			audio: 'mellowrhodes_Cmi_120.mp3'
-			resolution: 1/4
+			audio: 'TR-909-clap.mp3'
+			resolution: 1/8
 			row: 0
 			col: 1
 		}
 		{
-			id: 'green'
-			sprite: 'hexagon_green.png'
-			audio: 'brushfill.120.mp3'
-			resolution: 1/16
+			id: 'sleigh-bells'
+			sprite: 'hexagon_black.png'
+			audio: 'sleigh-bells.mp3'
+			resolution: 1/8
 			row: 0
 			col: 2
 		}
 		{
-			id: 'red'
-			sprite: 'hexagon_red.png'
-			audio: 'button-4.mp3'
+			id: 'raspberry'
+			sprite: 'hexagon_black.png'
+			audio: 'raspberry.mp3'
 			resolution: 1/8
 			row: 0
 			col: 3
 		}
 		{
-			id: 'black1'
+			id: 'funky-drummer'
 			sprite: 'hexagon_black.png'
-			audio: 'shuffled_house_120.mp3'
+			audio: 'funky-drummer.mp3'
 			resolution: 1/4
-			row: 0
-			col: 4
-		}
-		{
-			id: 'green1'
-			sprite: 'hexagon_green.png'
-			audio: 'button-3.mp3'
-			resolution: 1/16
-			row: 1
-			col: 0
-		}
-		{
-			id: 'red1'
-			sprite: 'hexagon_red.png'
-			audio: 'button-4.mp3'
-			resolution: 1/8
 			row: 1
 			col: 1
 		}
 		{
-			id: 'green2'
-			sprite: 'hexagon_green.png'
-			audio: 'button-3.mp3'
-			resolution: 1/16
+			id: 'cuckoo'
+			sprite: 'hexagon_black.png'
+			audio: 'cuckoo.mp3'
+			resolution: 1/8
 			row: 1
 			col: 2
 		}
 		{
-			id: 'red2'
-			sprite: 'hexagon_red.png'
-			audio: 'button-4.mp3'
+			id: 'snort'
+			sprite: 'hexagon_black.png'
+			audio: 'snort.mp3'
 			resolution: 1/8
 			row: 1
 			col: 3
 		}
 		{
-			id: 'green3'
-			sprite: 'hexagon_green.png'
-			audio: 'button-3.mp3'
-			resolution: 1/16
-			row: 1
-			col: 4
-		}
-		{
-			id: 'black4'
+			id: 'meow'
 			sprite: 'hexagon_black.png'
-			audio: 'shuffled_house_120.mp3'
-			resolution: 1/4
-			row: 2
-			col: 0
-		}
-		{
-			id: 'blue4'
-			sprite: 'hexagon_blue.png'
-			audio: 'button-2.mp3'
-			resolution: 1/4
+			audio: 'meow.mp3'
+			resolution: 1/8
 			row: 2
 			col: 1
 		}
 		{
-			id: 'green4'
-			sprite: 'hexagon_green.png'
-			audio: 'button-3.mp3'
-			resolution: 1/16
+			id: 'double-slide-whistle'
+			sprite: 'hexagon_black.png'
+			audio: 'double-slide-whistle.mp3'
+			resolution: 1/8
 			row: 2
 			col: 2
 		}
 		{
-			id: 'red4'
-			sprite: 'hexagon_red.png'
-			audio: 'button-4.mp3'
+			id: 'laser'
+			sprite: 'hexagon_black.png'
+			audio: 'laser.mp3'
 			resolution: 1/8
 			row: 2
 			col: 3
-		}
-		{
-			id: 'red5'
-			sprite: 'hexagon_red.png'
-			audio: 'button-4.mp3'
-			resolution: 1/8
-			row: 2
-			col: 4
 		}
 	]
