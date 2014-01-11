@@ -31,63 +31,63 @@
       audio: 'TR-909-clap.mp3',
       resolution: 1 / 8,
       row: 0,
-      col: 1
+      col: 0
     }, {
       id: 'sleigh-bells',
       sprite: 'hexagon_black.png',
       audio: 'sleigh-bells.mp3',
       resolution: 1 / 8,
       row: 0,
-      col: 2
+      col: 1
     }, {
       id: 'raspberry',
       sprite: 'hexagon_black.png',
       audio: 'raspberry.mp3',
       resolution: 1 / 8,
       row: 0,
-      col: 3
+      col: 2
     }, {
       id: 'funky-drummer',
       sprite: 'hexagon_black.png',
       audio: 'funky-drummer.mp3',
       resolution: 1 / 4,
       row: 1,
-      col: 1
+      col: 0
     }, {
       id: 'cuckoo',
       sprite: 'hexagon_black.png',
       audio: 'cuckoo.mp3',
       resolution: 1 / 8,
       row: 1,
-      col: 2
+      col: 1
     }, {
       id: 'snort',
       sprite: 'hexagon_black.png',
       audio: 'snort.mp3',
       resolution: 1 / 8,
       row: 1,
-      col: 3
+      col: 2
     }, {
       id: 'meow',
       sprite: 'hexagon_black.png',
       audio: 'meow.mp3',
       resolution: 1 / 8,
       row: 2,
-      col: 1
+      col: 0
     }, {
       id: 'double-slide-whistle',
       sprite: 'hexagon_black.png',
       audio: 'double-slide-whistle.mp3',
       resolution: 1 / 8,
       row: 2,
-      col: 2
+      col: 1
     }, {
       id: 'laser',
       sprite: 'hexagon_black.png',
       audio: 'laser.mp3',
       resolution: 1 / 8,
       row: 2,
-      col: 3
+      col: 2
     }
   ];
 
@@ -177,11 +177,13 @@
       this.handleClick = __bind(this.handleClick, this);
       var item, pad, _i, _len;
       this.canvas = App.canvas.el;
-      this.pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
       this.padWidth = App.config.pad.width;
       this.padHeight = App.config.pad.height;
       this.numCols = this.canvas.width / this.padWidth;
       this.pads = [];
+      this.scaleCanvas();
+      window.addEventListener('resize', this.scaleCanvas.bind(this));
+      window.addEventListener('orientationchange', this.scaleCanvas.bind(this));
       for (_i = 0, _len = items.length; _i < _len; _i++) {
         item = items[_i];
         pad = new App.Pad(item);
@@ -198,20 +200,23 @@
       this.update();
     }
 
+    State.prototype.scaleCanvas = function(evt) {
+      this.size = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+      this.pixelRatio = this.canvas.width / this.size;
+      this.canvas.style.width = "" + this.size + "px";
+      return this.canvas.style.height = "" + this.size + "px";
+    };
+
     State.prototype.getOffsetPadIndex = function(x, y) {
       var col, offsetX, offsetY, row;
+      offsetX = (window.innerWidth - this.size) / 2;
+      offsetY = (window.innerHeight - this.size) / 2;
+      x = (x - offsetX) * this.pixelRatio;
+      y = (y - offsetY) * this.pixelRatio;
       if (window.orientation === 0) {
-        offsetX = (window.innerWidth - (this.canvas.height / this.pixelRatio)) / 2;
-        offsetY = (window.innerHeight - (this.canvas.width / this.pixelRatio)) / 2;
-        x = this.canvas.height - ((x - offsetX) * this.pixelRatio);
-        y = (y - offsetY) * this.pixelRatio;
         col = Math.floor(y / this.padWidth);
-        row = Math.floor(x / this.padHeight);
+        row = Math.floor((this.canvas.width - x) / this.padHeight);
       } else {
-        offsetX = (window.innerWidth - (this.canvas.width / this.pixelRatio)) / 2;
-        offsetY = (window.innerHeight - (this.canvas.height / this.pixelRatio)) / 2;
-        x = (x - offsetX) * this.pixelRatio;
-        y = (y - offsetY) * this.pixelRatio;
         col = Math.floor(x / this.padWidth);
         row = Math.floor(y / this.padHeight);
       }

@@ -1,12 +1,16 @@
 class App.State
 	constructor: (items)->
 		@canvas = App.canvas.el
-		@pixelRatio = if window.devicePixelRatio > 1 then 2 else 1
 		@padWidth = App.config.pad.width
 		@padHeight = App.config.pad.height
 		@numCols = @canvas.width / @padWidth
 
 		@pads = []
+
+		@scaleCanvas()
+
+		window.addEventListener 'resize', @scaleCanvas.bind(@)
+		window.addEventListener 'orientationchange', @scaleCanvas.bind(@)
 
 		for item in items
 			pad = new App.Pad item
@@ -22,20 +26,24 @@ class App.State
 
 		@update()
 
+	scaleCanvas: (evt)->
+		@size = if window.innerWidth < window.innerHeight then window.innerWidth else window.innerHeight
+		@pixelRatio = @canvas.width / @size
+
+		@canvas.style.width = "#{@size}px"
+		@canvas.style.height = "#{@size}px"
+
 	getOffsetPadIndex: (x, y)->
+		offsetX = (window.innerWidth - @size) / 2
+		offsetY = (window.innerHeight - @size) / 2
+		x = (x - offsetX) * @pixelRatio
+		y = (y - offsetY) * @pixelRatio
+
 		if window.orientation is 0
-			offsetX = (window.innerWidth - (@canvas.height / @pixelRatio)) / 2
-			offsetY = (window.innerHeight - (@canvas.width / @pixelRatio)) / 2
-			x = @canvas.height - ((x - offsetX) * @pixelRatio)
-			y = (y - offsetY) * @pixelRatio
 			col = Math.floor(y / @padWidth)
-			row = Math.floor(x / @padHeight)
+			row = Math.floor((@canvas.width - x)/ @padHeight)
 
 		else
-			offsetX = (window.innerWidth - (@canvas.width / @pixelRatio)) / 2
-			offsetY = (window.innerHeight - (@canvas.height / @pixelRatio)) / 2
-			x = (x - offsetX) * @pixelRatio
-			y = (y - offsetY) * @pixelRatio
 			col = Math.floor(x / @padWidth)
 			row = Math.floor(y / @padHeight)
 

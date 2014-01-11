@@ -6,7 +6,7 @@ App.manifest =
 			audio: 'TR-909-clap.mp3'
 			resolution: 1/8
 			row: 0
-			col: 1
+			col: 0
 		}
 		{
 			id: 'sleigh-bells'
@@ -14,7 +14,7 @@ App.manifest =
 			audio: 'sleigh-bells.mp3'
 			resolution: 1/8
 			row: 0
-			col: 2
+			col: 1
 		}
 		{
 			id: 'raspberry'
@@ -22,7 +22,7 @@ App.manifest =
 			audio: 'raspberry.mp3'
 			resolution: 1/8
 			row: 0
-			col: 3
+			col: 2
 		}
 		{
 			id: 'funky-drummer'
@@ -30,7 +30,7 @@ App.manifest =
 			audio: 'funky-drummer.mp3'
 			resolution: 1/4
 			row: 1
-			col: 1
+			col: 0
 		}
 		{
 			id: 'cuckoo'
@@ -38,7 +38,7 @@ App.manifest =
 			audio: 'cuckoo.mp3'
 			resolution: 1/8
 			row: 1
-			col: 2
+			col: 1
 		}
 		{
 			id: 'snort'
@@ -46,7 +46,7 @@ App.manifest =
 			audio: 'snort.mp3'
 			resolution: 1/8
 			row: 1
-			col: 3
+			col: 2
 		}
 		{
 			id: 'meow'
@@ -54,7 +54,7 @@ App.manifest =
 			audio: 'meow.mp3'
 			resolution: 1/8
 			row: 2
-			col: 1
+			col: 0
 		}
 		{
 			id: 'double-slide-whistle'
@@ -62,7 +62,7 @@ App.manifest =
 			audio: 'double-slide-whistle.mp3'
 			resolution: 1/8
 			row: 2
-			col: 2
+			col: 1
 		}
 		{
 			id: 'laser'
@@ -70,6 +70,6 @@ App.manifest =
 			audio: 'laser.mp3'
 			resolution: 1/8
 			row: 2
-			col: 3
+			col: 2
 		}
 	]
