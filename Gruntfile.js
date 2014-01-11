@@ -24,6 +24,7 @@ module.exports = function(grunt) {
 						'assets/scripts/state.coffee',
 						'assets/scripts/sound.coffee',
 						'assets/scripts/sprite.coffee',
+						'assets/scripts/background.coffee',
 						'assets/scripts/pad.coffee',
 						'assets/scripts/footer.coffee',
 					]
