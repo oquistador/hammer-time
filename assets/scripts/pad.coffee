@@ -7,8 +7,8 @@ class App.Pad
 		@background = new App.Background opts
 
 		@resolution = 60 / App.config.bpm * opts.resolution * 4 * 1000
-		@spriteDuration = Math.floor(@sound.buffer.duration * 1000 / @sprite.duration) * @sprite.duration
-		@spriteDuration = 500 unless @spriteDuration
+		@playDurration = Math.floor(@sound.buffer.duration * 1000 / @sprite.duration) * @sprite.duration
+		@playDurration = 500 unless @playDurration
 
 		@queue = []
 
@@ -19,8 +19,8 @@ class App.Pad
 		@ts = ts
 
 		if @triggerAt and @ts >= @triggerAt
-			@sound.play(0)
-			@sprite.play(@spriteDuration)
+			@sound.play 0 
+			@sprite.play @playDurration 
 			
 			@triggerAt = null
 
@@ -29,3 +29,5 @@ class App.Pad
 
 	trigger: ->
 		@triggerAt = @ts + @resolution - (@ts % @resolution)
+		@background.play @triggerAt - @ts, @playDurration
+
