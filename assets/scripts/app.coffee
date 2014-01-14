@@ -9,27 +9,28 @@ App.sprites = {}
 App.load = ->
 	totalItems = App.manifest.length * 2
 	remainingItems = totalItems
-	loaderBar = document.querySelector '#loader .bar'
+	loadingBar = document.querySelector '#loading-bar'
 	App.canvas.el = document.querySelector 'canvas'
 	App.canvas.ctx = App.canvas.el.getContext '2d'
 
 	updateLoader = ->
 		remainingItems--
-		loaderBar.style.width = "#{Math.ceil(((totalItems - remainingItems) / totalItems) * 100)}%"
-		
+		width = Math.ceil(((totalItems - remainingItems) / totalItems) * 80)
+		loadingBar.setAttribute 'width', width
+
 		unless remainingItems
 			setTimeout (->
-					loader = document.querySelector('#loader')
+					loading = document.querySelector('#loading')
 					transitionEnd = (evt)->
 						return unless evt.propertyName is 'opacity'
 					
-						document.body.removeChild loader
+						loading.parentNode.style.display = 'none'
 						App.init()
 
-					loader.style.opacity = 0
+					loading.style.opacity = 0
 
-					loader.addEventListener 'transitioned', transitionEnd
-					loader.addEventListener 'webkitTransitionEnd', transitionEnd
+					loading.addEventListener 'transitioned', transitionEnd
+					loading.addEventListener 'webkitTransitionEnd', transitionEnd
 				), 500
 
 	loadAudio = (item)->

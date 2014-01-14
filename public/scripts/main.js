@@ -27,7 +27,7 @@
   App.manifest = [
     {
       id: 'clap',
-      sprite: 'hexagon_black.png',
+      sprite: 'clap.png',
       background: '#113F8C',
       audio: 'TR-909-clap.mp3',
       resolution: 1 / 8,
@@ -51,7 +51,7 @@
       col: 2
     }, {
       id: 'funky-drummer',
-      sprite: 'hexagon_black.png',
+      sprite: 'drums.png',
       background: '#61AE24',
       audio: 'funky-drummer.mp3',
       resolution: 1 / 4,
@@ -59,7 +59,7 @@
       col: 0
     }, {
       id: 'cuckoo',
-      sprite: 'hexagon_black.png',
+      sprite: 'cuckoo.png',
       background: '#D0D102',
       audio: 'cuckoo.mp3',
       resolution: 1 / 8,
@@ -67,7 +67,7 @@
       col: 1
     }, {
       id: 'snort',
-      sprite: 'hexagon_black.png',
+      sprite: 'snort.png',
       background: '#32742C',
       audio: 'snort.mp3',
       resolution: 1 / 8,
@@ -75,7 +75,7 @@
       col: 2
     }, {
       id: 'meow',
-      sprite: 'hexagon_black.png',
+      sprite: 'meow.png',
       background: '#D70060',
       audio: 'meow.mp3',
       resolution: 1 / 8,
@@ -83,7 +83,7 @@
       col: 0
     }, {
       id: 'double-slide-whistle',
-      sprite: 'hexagon_black.png',
+      sprite: 'whistle.png',
       background: '#E54028',
       audio: 'double-slide-whistle.mp3',
       resolution: 1 / 8,
@@ -91,7 +91,7 @@
       col: 1
     }, {
       id: 'laser',
-      sprite: 'hexagon_black.png',
+      sprite: 'zap.png',
       background: '#F18D05',
       audio: 'laser.mp3',
       resolution: 1 / 8,
@@ -110,29 +110,31 @@
   App.sprites = {};
 
   App.load = function() {
-    var loadAudio, loadImage, loaderBar, remainingItems, totalItems, updateLoader;
+    var loadAudio, loadImage, loadingBar, remainingItems, totalItems, updateLoader;
     totalItems = App.manifest.length * 2;
     remainingItems = totalItems;
-    loaderBar = document.querySelector('#loader .bar');
+    loadingBar = document.querySelector('#loading-bar');
     App.canvas.el = document.querySelector('canvas');
     App.canvas.ctx = App.canvas.el.getContext('2d');
     updateLoader = function() {
+      var width;
       remainingItems--;
-      loaderBar.style.width = "" + (Math.ceil(((totalItems - remainingItems) / totalItems) * 100)) + "%";
+      width = Math.ceil(((totalItems - remainingItems) / totalItems) * 80);
+      loadingBar.setAttribute('width', width);
       if (!remainingItems) {
         return setTimeout((function() {
-          var loader, transitionEnd;
-          loader = document.querySelector('#loader');
+          var loading, transitionEnd;
+          loading = document.querySelector('#loading');
           transitionEnd = function(evt) {
             if (evt.propertyName !== 'opacity') {
               return;
             }
-            document.body.removeChild(loader);
+            loading.parentNode.style.display = 'none';
             return App.init();
           };
-          loader.style.opacity = 0;
-          loader.addEventListener('transitioned', transitionEnd);
-          return loader.addEventListener('webkitTransitionEnd', transitionEnd);
+          loading.style.opacity = 0;
+          loading.addEventListener('transitioned', transitionEnd);
+          return loading.addEventListener('webkitTransitionEnd', transitionEnd);
         }), 500);
       }
     };

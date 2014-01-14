@@ -6,54 +6,39 @@ body {
   margin: 0;
   overflow: hidden;
   font-size: 0;
-  display: flex;
   height: 100%;
   background: #fff; }
 
+.wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex; }
+  .wrapper * {
+    margin: auto; }
+
 canvas {
   max-width: 600px;
-  max-height: 600px;
-  margin: auto; }
+  max-height: 600px; }
 
-#loader {
-  width: 400px;
-  height: 240px;
-  background: #ccc;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin: -120px 0 0 -200px;
+#loading {
+  max-width: 400px;
+  max-height: 400px;
   -moz-transition: opacity 500ms;
   -webkit-transition: opacity 500ms;
   -o-transition: opacity 500ms;
   transition: opacity 500ms;
   -webkit-perspective: 1000;
-  -webkit-backface-visibility: hidden;
-  -moz-transform: scale(0.5);
-  -webkit-transform: scale(0.5);
-  -o-transform: scale(0.5);
-  transform: scale(0.5);
-  border: 40px solid white;
-  border-radius: 40px; }
-  #loader .bar {
-    background: #ED146F;
-    width: 0;
-    height: 100%;
-    position: absolute;
-    -moz-transition: width 500ms;
-    -webkit-transition: width 500ms;
-    -o-transition: width 500ms;
-    transition: width 500ms;
-    -webkit-perspective: 1000;
-    -webkit-backface-visibility: hidden; }
-  #loader .mask {
-    width: 100%;
-    height: 100%;
-    background: transparent url(/images/loader_mask.png) no-repeat;
-    position: absolute; }
+  -webkit-backface-visibility: hidden; }
+
+#loading-bg {
+  fill: #ccc; }
+
+#loading-bar {
+  fill: #ED146F; }
 
 @media screen and (orientation: portrait) {
-  canvas {
+  canvas, #loading {
     -moz-transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
     -o-transform: rotate(90deg);
