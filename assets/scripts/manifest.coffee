@@ -3,7 +3,7 @@ App.manifest =
 		{
 			id: 'clap'
 			sprite: 'hexagon_black.png'
-			background: '#ccc'
+			background: '#113F8C'
 			audio: 'TR-909-clap.mp3'
 			resolution: 1/8
 			row: 0
@@ -11,8 +11,8 @@ App.manifest =
 		}
 		{
 			id: 'sleigh-bells'
-			sprite: 'hexagon_black.png'
-			background: '#ccc'
+			sprite: 'sleigh-bells.png'
+			background: '#01A4A4'
 			audio: 'sleigh-bells.mp3'
 			resolution: 1/8
 			row: 0
@@ -20,8 +20,8 @@ App.manifest =
 		}
 		{
 			id: 'raspberry'
-			sprite: 'hexagon_black.png'
-			background: '#ccc'
+			sprite: 'raspberry.png'
+			background: '#00A1CB'
 			audio: 'raspberry.mp3'
 			resolution: 1/8
 			row: 0
@@ -30,7 +30,7 @@ App.manifest =
 		{
 			id: 'funky-drummer'
 			sprite: 'hexagon_black.png'
-			background: '#ccc'
+			background: '#61AE24'
 			audio: 'funky-drummer.mp3'
 			resolution: 1/4
 			row: 1
@@ -39,7 +39,7 @@ App.manifest =
 		{
 			id: 'cuckoo'
 			sprite: 'hexagon_black.png'
-			background: '#ccc'
+			background: '#D0D102'
 			audio: 'cuckoo.mp3'
 			resolution: 1/8
 			row: 1
@@ -48,7 +48,7 @@ App.manifest =
 		{
 			id: 'snort'
 			sprite: 'hexagon_black.png'
-			background: '#ccc'
+			background: '#32742C'
 			audio: 'snort.mp3'
 			resolution: 1/8
 			row: 1
@@ -57,7 +57,7 @@ App.manifest =
 		{
 			id: 'meow'
 			sprite: 'hexagon_black.png'
-			background: '#ccc'
+			background: '#D70060'
 			audio: 'meow.mp3'
 			resolution: 1/8
 			row: 2
@@ -66,7 +66,7 @@ App.manifest =
 		{
 			id: 'double-slide-whistle'
 			sprite: 'hexagon_black.png'
-			background: '#ccc'
+			background: '#E54028'
 			audio: 'double-slide-whistle.mp3'
 			resolution: 1/8
 			row: 2
@@ -75,7 +75,7 @@ App.manifest =
 		{
 			id: 'laser'
 			sprite: 'hexagon_black.png'
-			background: '#ccc'
+			background: '#F18D05'
 			audio: 'laser.mp3'
 			resolution: 1/8
 			row: 2

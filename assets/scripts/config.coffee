@@ -5,7 +5,7 @@ App.config =
 		height: 200
 		sprite:
 			numFrames: 4
-			fps: 16
+			fps: 12
 	paths: 
 		sprite: 'images/sprites/'
 		audio: 'audio/'

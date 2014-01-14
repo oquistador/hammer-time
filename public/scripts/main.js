@@ -15,7 +15,7 @@
       height: 200,
       sprite: {
         numFrames: 4,
-        fps: 16
+        fps: 12
       }
     },
     paths: {
@@ -28,23 +28,23 @@
     {
       id: 'clap',
       sprite: 'hexagon_black.png',
-      background: '#ccc',
+      background: '#113F8C',
       audio: 'TR-909-clap.mp3',
       resolution: 1 / 8,
       row: 0,
       col: 0
     }, {
       id: 'sleigh-bells',
-      sprite: 'hexagon_black.png',
-      background: '#ccc',
+      sprite: 'sleigh-bells.png',
+      background: '#01A4A4',
       audio: 'sleigh-bells.mp3',
       resolution: 1 / 8,
       row: 0,
       col: 1
     }, {
       id: 'raspberry',
-      sprite: 'hexagon_black.png',
-      background: '#ccc',
+      sprite: 'raspberry.png',
+      background: '#00A1CB',
       audio: 'raspberry.mp3',
       resolution: 1 / 8,
       row: 0,
@@ -52,7 +52,7 @@
     }, {
       id: 'funky-drummer',
       sprite: 'hexagon_black.png',
-      background: '#ccc',
+      background: '#61AE24',
       audio: 'funky-drummer.mp3',
       resolution: 1 / 4,
       row: 1,
@@ -60,7 +60,7 @@
     }, {
       id: 'cuckoo',
       sprite: 'hexagon_black.png',
-      background: '#ccc',
+      background: '#D0D102',
       audio: 'cuckoo.mp3',
       resolution: 1 / 8,
       row: 1,
@@ -68,7 +68,7 @@
     }, {
       id: 'snort',
       sprite: 'hexagon_black.png',
-      background: '#ccc',
+      background: '#32742C',
       audio: 'snort.mp3',
       resolution: 1 / 8,
       row: 1,
@@ -76,7 +76,7 @@
     }, {
       id: 'meow',
       sprite: 'hexagon_black.png',
-      background: '#ccc',
+      background: '#D70060',
       audio: 'meow.mp3',
       resolution: 1 / 8,
       row: 2,
@@ -84,7 +84,7 @@
     }, {
       id: 'double-slide-whistle',
       sprite: 'hexagon_black.png',
-      background: '#ccc',
+      background: '#E54028',
       audio: 'double-slide-whistle.mp3',
       resolution: 1 / 8,
       row: 2,
@@ -92,7 +92,7 @@
     }, {
       id: 'laser',
       sprite: 'hexagon_black.png',
-      background: '#ccc',
+      background: '#F18D05',
       audio: 'laser.mp3',
       resolution: 1 / 8,
       row: 2,
@@ -370,38 +370,71 @@
   })();
 
   App.Background = (function() {
-    Background.prototype.radius = App.config.pad.width / 2 - 6;
+    Background.prototype.radius = App.config.pad.width / 2 - 8;
+
+    Background.prototype.borderWidth = 10;
 
     function Background(opts) {
       this.centerX = opts.col * App.config.pad.width + (App.config.pad.width / 2);
       this.centerY = opts.row * App.config.pad.width + (App.config.pad.width / 2);
       this.color = opts.background;
+      this.reset();
     }
 
-    Background.prototype.drawBackground = function() {
+    Background.prototype.play = function(fadeRemaining, solidRemaining) {
+      this.fadeRemaining = fadeRemaining;
+      this.solidRemaining = solidRemaining;
+      this.isPlaying = true;
+      this.fadeTotal = this.fadeRemaining;
+      return this;
+    };
+
+    Background.prototype.reset = function() {
+      this.isPlaying = false;
+      this.fadeRemaining = 0;
+      this.fadeTotal = 0;
+      this.solidRemaining = 0;
+      this.isPlaying = false;
+      return this;
+    };
+
+    Background.prototype.drawBackground = function(dt) {
+      var opacity;
+      if (!this.isPlaying) {
+        return;
+      }
+      this.fadeRemaining -= dt;
+      this.solidRemaining -= dt;
+      if (this.fadeRemaining > 0) {
+        opacity = ((this.fadeTotal - this.fadeRemaining) / this.fadeTotal) * .5;
+      } else if (this.solidRemaining > 0) {
+        opacity = .5;
+      } else {
+        return this.reset();
+      }
+      App.canvas.ctx.save();
+      App.canvas.ctx.beginPath();
+      App.canvas.ctx.arc(this.centerX, this.centerY, this.radius - (this.borderWidth / 2), 0, 2 * Math.PI, false);
+      App.canvas.ctx.fillStyle = this.color;
+      App.canvas.ctx.globalAlpha = opacity;
+      App.canvas.ctx.fill();
+      return App.canvas.ctx.restore();
+    };
+
+    Background.prototype.drawBorder = function() {
       App.canvas.ctx.save();
       App.canvas.ctx.beginPath();
       App.canvas.ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI, false);
-      App.canvas.ctx.fillStyle = this.color;
-      App.canvas.ctx.fill();
-      App.canvas.ctx.lineWidth = 6;
-      App.canvas.ctx.strokeStyle = '#000';
+      App.canvas.ctx.lineWidth = this.borderWidth;
+      App.canvas.ctx.strokeStyle = this.color;
+      App.canvas.ctx.globalAlpha = .8;
       App.canvas.ctx.stroke();
       return App.canvas.ctx.restore();
     };
 
-    Background.prototype.drawMask = function(dt) {
-      App.canvas.ctx.save();
-      App.canvas.ctx.beginPath();
-      App.canvas.ctx.arc(this.centerX, this.centerY, this.radius - 10, 0, 2 * Math.PI, false);
-      App.canvas.ctx.fillStyle = '#fff';
-      App.canvas.ctx.fill();
-      return App.canvas.ctx.restore();
-    };
-
     Background.prototype.render = function(dt) {
-      this.drawBackground();
-      return this.drawMask();
+      this.drawBackground(dt);
+      return this.drawBorder();
     };
 
     return Background;
@@ -415,9 +448,9 @@
       this.sprite = App.sprites[this.id];
       this.background = new App.Background(opts);
       this.resolution = 60 / App.config.bpm * opts.resolution * 4 * 1000;
-      this.spriteDuration = Math.floor(this.sound.buffer.duration * 1000 / this.sprite.duration) * this.sprite.duration;
-      if (!this.spriteDuration) {
-        this.spriteDuration = 500;
+      this.playDurration = Math.floor(this.sound.buffer.duration * 1000 / this.sprite.duration) * this.sprite.duration;
+      if (!this.playDurration) {
+        this.playDurration = 500;
       }
       this.queue = [];
     }
@@ -431,7 +464,7 @@
       this.ts = ts;
       if (this.triggerAt && this.ts >= this.triggerAt) {
         this.sound.play(0);
-        this.sprite.play(this.spriteDuration);
+        this.sprite.play(this.playDurration);
         this.triggerAt = null;
       }
       this.background.render(dt);
@@ -439,7 +472,8 @@
     };
 
     Pad.prototype.trigger = function() {
-      return this.triggerAt = this.ts + this.resolution - (this.ts % this.resolution);
+      this.triggerAt = this.ts + this.resolution - (this.ts % this.resolution);
+      return this.background.play(this.triggerAt - this.ts, this.playDurration);
     };
 
     return Pad;
