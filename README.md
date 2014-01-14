@@ -17,3 +17,18 @@ Editing
 If you'd like to edit any of the CoffeeScript or Sass files, Grunt can watch and compile your project for you. Just make sure to run the watch task.
 
     $ grunt watch
+    
+Credits
+---
+The sprite images were based on the following images from [The Noun Project](http://thenounproject.com)
+* Music by Márcio Duarte
+* Lightning Bolt by Christopher Reyes
+* Cat by Martin LEBRETON
+* Drum by Hum
+* Smell by Takao Umehara
+* Taste by Takao Umehara
+* Chicken by Geoffrey Joe
+* Tin Whistle by factor[e] design initiative
+* Gloves by TNS
+
+Drums by the great Clyde Stubblefield on James Brown's "Funky Drummer." You already knew that though.
