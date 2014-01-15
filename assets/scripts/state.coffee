@@ -28,6 +28,7 @@ class App.State
 
 	scaleCanvas: (evt)->
 		@size = if window.innerWidth < window.innerHeight then window.innerWidth else window.innerHeight
+		@size = @canvas.width if @size > @canvas.width
 		@pixelRatio = @canvas.width / @size
 
 		@canvas.style.width = "#{@size}px"

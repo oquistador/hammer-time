@@ -213,6 +213,9 @@
 
     State.prototype.scaleCanvas = function(evt) {
       this.size = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+      if (this.size > this.canvas.width) {
+        this.size = this.canvas.width;
+      }
       this.pixelRatio = this.canvas.width / this.size;
       this.canvas.style.width = "" + this.size + "px";
       return this.canvas.style.height = "" + this.size + "px";
